@@ -29,8 +29,7 @@ for name in images:
         print(barcode.type)
         print(stri)
         if barcode.type == 'CODE128':
-            if stri[0:3] == '919':
-                barlist.append(stri)
+            barlist.append(stri)
 #        print(stri)
 #        print(barcode.type)
 #    cv2.namedWindow("POD", cv2.WINDOW_NORMAL)
