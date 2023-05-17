@@ -9,8 +9,8 @@ os.chdir('NAPS2')
 com_naps = 'naps2.console.exe'
 inp_file = '../Files/blank.pdf'
 out_file = '../Files/outpt.pdf'
-pdf_file = '../Files/POD_'+refn+'.pdf'
-log_file = '../Files/POD_'+refn+'.txt'
+pdf_file = '../Files/'+refn+'_ZPOD_0001_00.pdf'
+log_file = '../Files/'+refn+'_ZPOD_0001_00.txt'
 os.system(com_naps+' -i '+inp_file+' -o '+ out_file+ ' -f')
 
 readxPDF = PyPDF2.PdfReader(out_file)
@@ -34,7 +34,7 @@ pages = convert_from_path(pdf_file,500,poppler_path=r"../poppler/bin")
 
 images = []
 for i in range(len(pages)):
-    name = '../Files/POD_'+refn+'_'+str(i)+'.png'
+    name = '../Files/'+refn+'_ZPOD_0001_00_'+str(i)+'.png'
     images.append(name)
     pages[i].save(name,'PNG')
 
