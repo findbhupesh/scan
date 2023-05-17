@@ -27,7 +27,7 @@ for name in images:
         data = barcode.data
         stri = data.decode('utf8', 'strict')
         if barcode.type == 'CODE128':
-            if stri[0:2] == '92':
+            if stri[0:3] == '919':
                 barlist.append(stri)
 #        print(stri)
 #        print(barcode.type)
