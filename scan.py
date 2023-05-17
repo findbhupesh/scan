@@ -30,7 +30,7 @@ writePDF.write(outptPDF)
 
 outptPDF.close()
 
-pages = convert_from_path(pdf_file,500,poppler_path=r"../poppler/bin")
+pages = convert_from_path(pdf_file,500,poppler_path=r"..\\poppler\\bin")
 
 images = []
 for i in range(len(pages)):
@@ -45,6 +45,8 @@ for name in images:
     for barcode in barcodes:
         data = barcode.data
         stri = data.decode('utf8', 'strict')
+        print(barcode.type)
+        print(stri)
         if barcode.type == 'CODE128':
             barlist.append(stri)
 #    cv2.namedWindow("POD", cv2.WINDOW_NORMAL)
@@ -58,6 +60,6 @@ else:
     f.write("0000000000")
 f.close()
 
-for image in images:
-    os.remove(image)
+#for image in images:
+#    os.remove(image)
 
