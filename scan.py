@@ -26,8 +26,10 @@ for name in images:
     for barcode in barcodes:
         data = barcode.data
         stri = data.decode('utf8', 'strict')
+        print(barcode.type)
+        print(stri)
         if barcode.type == 'CODE128':
-            if stri[0:3] == '009':
+            if stri[0:3] == '919':
                 barlist.append(stri)
 #        print(stri)
 #        print(barcode.type)
@@ -35,8 +37,10 @@ for name in images:
 #    cv2.imshow("POD", image)
 #    cv2.waitKey(0)
 #    cv2.destroyAllWindows()
-
-print(barlist[0])
+if len(barlist) > 0 :
+    print(barlist[0])
+else:
+    print('0000000000')
 inv_numb = ""
 for c in pdf_name:
     if c.isdigit():
@@ -44,7 +48,10 @@ for c in pdf_name:
 print(inv_numb)
 log_file = 'Files/POD_'+refn+'.txt'
 f = open(log_file, "w")
-f.write(barlist[0])
+if len(barlist) > 0:
+    f.write(barlist[0])
+else:
+    f.write("0000000000")
 f.close()
 
 for image in images:
