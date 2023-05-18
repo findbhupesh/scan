@@ -6,7 +6,6 @@ from pyzbar.pyzbar import decode, ZBarSymbol
 
 file_name = 'Files/'+sys.argv[1]+'_ZPOD_00'
 
-
 os.chdir('NAPS2')
 os.system('naps2.console -i blank.pdf  -o ../Files/outpt.pdf -f')
 os.chdir('..')
