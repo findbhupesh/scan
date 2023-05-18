@@ -1,5 +1,6 @@
-import cv2,os,sys
+import os,sys
 import PyPDF2
+from PIL import Image
 from pdf2image import convert_from_path
 from pyzbar.pyzbar import decode, ZBarSymbol
 
@@ -9,39 +10,38 @@ os.chdir('NAPS2')
 com_naps = 'naps2.console.exe'
 inp_file = '../Files/blank.pdf'
 out_file = '../Files/outpt.pdf'
-pdf_file = '../Files/'+refn+'_ZPOD_0001_00.pdf'
-log_file = '../Files/'+refn+'_ZPOD_0001_00.txt'
 os.system(com_naps+' -i '+inp_file+' -o '+ out_file+ ' -f')
-
-readxPDF = PyPDF2.PdfReader(out_file)
+os.chdir('..')
+pdf_file = 'Files/'+refn+'_ZPOD_0001_00.pdf'
+log_file = 'Files/'+refn+'_ZPOD_0001_00.txt'
+readxPDF = PyPDF2.PdfReader('Files/outpt.pdf')
 writePDF = PyPDF2.PdfWriter()
 pagesPDF = len(readxPDF.pages)
 outptPDF = open(pdf_file,"wb")
 
 for i in range(pagesPDF):
     pagexPDF = readxPDF.pages[i]
-    textxPDF  = pagexPDF.extract_text()
     if pagesPDF == 1:
         writePDF.add_page(pagexPDF)
     else:
-        if (len(textxPDF) > 0):
+        if i > 0:
             writePDF.add_page(pagexPDF)
 
 writePDF.write(outptPDF)
 
 outptPDF.close()
 
-imgPages = convert_from_path(pdf_file,500,poppler_path=r"..\\poppler\\bin")
+imgPages = convert_from_path(pdf_file,500,poppler_path=r"poppler\\bin")
 
 images = []
 for i in range(len(imgPages)):
-    png_name = '../Files/'+refn+'_ZPOD_0001_00_'+str(i)+'.png'
+    png_name = 'Files/'+refn+'_ZPOD_0001_00_'+str(i)+'.png'
     images.append(png_name)
     imgPages[i].save(png_name,'PNG')
 
 barlist =[]
 for name in images:
-    image = cv2.imread(name) 
+    image = Image.open(name)
     barcodes = decode(image)
     for barcode in barcodes:
         data = barcode.data
@@ -51,9 +51,7 @@ for name in images:
         if barcode.type == 'CODE128':
             if len(stri) == 10:
                 barlist.append(stri)
-    cv2.namedWindow("POD", cv2.WINDOW_NORMAL)
-    cv2.imshow("POD", image)
-    cv2.waitKey(0)
+    image.show()    
 
 f = open(log_file, "w")
 if len(barlist) > 0:
