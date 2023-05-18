@@ -17,6 +17,7 @@ readxPDF = PyPDF2.PdfReader(out_file)
 writePDF = PyPDF2.PdfWriter()
 pagesPDF = len(readxPDF.pages)
 outptPDF = open(pdf_file,"wb")
+
 for i in range(pagesPDF):
     pagexPDF = readxPDF.pages[i]
     textxPDF  = pagexPDF.extract_text()
@@ -30,13 +31,13 @@ writePDF.write(outptPDF)
 
 outptPDF.close()
 
-pages = convert_from_path(pdf_file,500,poppler_path=r"..\\poppler\\bin")
+imgPages = convert_from_path(pdf_file,500,poppler_path=r"..\\poppler\\bin")
 
 images = []
-for i in range(len(pages)):
-    name = '../Files/'+refn+'_ZPOD_0001_00_'+str(i)+'.png'
-    images.append(name)
-    pages[i].save(name,'PNG')
+for i in range(len(imgPages)):
+    png_name = '../Files/'+refn+'_ZPOD_0001_00_'+str(i)+'.png'
+    images.append(png_name)
+    imgPages[i].save(png_name,'PNG')
 
 barlist =[]
 for name in images:
@@ -49,9 +50,9 @@ for name in images:
         print(stri)
         if barcode.type == 'CODE128':
             barlist.append(stri)
-#    cv2.namedWindow("POD", cv2.WINDOW_NORMAL)
-#    cv2.imshow("POD", image)
-#    cv2.waitKey(0)
+    cv2.namedWindow("POD", cv2.WINDOW_NORMAL)
+    cv2.imshow("POD", image)
+    cv2.waitKey(0)
 
 f = open(log_file, "w")
 if len(barlist) > 0:
