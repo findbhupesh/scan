@@ -25,7 +25,7 @@ for i in range(pagesPDF):
         writePDF.add_page(pagexPDF)
     else:
         if (len(textxPDF) > 0):
-            writePDF.addPage(pagexPDF)
+            writePDF.add_page(pagexPDF)
 
 writePDF.write(outptPDF)
 
@@ -49,7 +49,8 @@ for name in images:
         print(barcode.type)
         print(stri)
         if barcode.type == 'CODE128':
-            barlist.append(stri)
+            if len(stri) == 10:
+                barlist.append(stri)
     cv2.namedWindow("POD", cv2.WINDOW_NORMAL)
     cv2.imshow("POD", image)
     cv2.waitKey(0)
@@ -61,6 +62,6 @@ else:
     f.write("0000000000")
 f.close()
 
-#for image in images:
-#    os.remove(image)
+for image in images:
+    os.remove(image)
 
