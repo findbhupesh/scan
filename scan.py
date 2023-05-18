@@ -5,28 +5,30 @@ from pdf2image import convert_from_path
 from pyzbar.pyzbar import decode, ZBarSymbol
 
 file_name = 'Files/'+sys.argv[1]+'_ZPOD_00'
+pdf_file  = file_name + '.pdf'
+log_file  = file_name + '.txt'
+print(os.path.exists(pdf_file) )
+if not os.path.exists(pdf_file):
+    os.chdir('NAPS2')
+    os.system('naps2.console -i blank.pdf  -o ../Files/outpt.pdf -f')
+    os.chdir('..')
 
-os.chdir('NAPS2')
-os.system('naps2.console -i blank.pdf  -o ../Files/outpt.pdf -f')
-os.chdir('..')
-pdf_file = file_name + '.pdf'
-log_file = file_name + '.txt'
-readxPDF = PyPDF2.PdfReader('Files/outpt.pdf')
-writePDF = PyPDF2.PdfWriter()
-pagesPDF = len(readxPDF.pages)
-outptPDF = open(pdf_file,"wb")
+    readxPDF = PyPDF2.PdfReader('Files/outpt.pdf')
+    writePDF = PyPDF2.PdfWriter()
+    pagesPDF = len(readxPDF.pages)
+    outptPDF = open(pdf_file,"wb")
 
-for i in range(pagesPDF):
-    pagexPDF = readxPDF.pages[i]
-    if pagesPDF == 1:
-        writePDF.add_page(pagexPDF)
-    else:
-        if i > 0:
+    for i in range(pagesPDF):
+        pagexPDF = readxPDF.pages[i]
+        if pagesPDF == 1:
             writePDF.add_page(pagexPDF)
+        else:
+            if i > 0:
+                writePDF.add_page(pagexPDF)
 
-writePDF.write(outptPDF)
+    writePDF.write(outptPDF)
 
-outptPDF.close()
+    outptPDF.close()
 
 imgPages = convert_from_path(pdf_file,500,poppler_path=r"poppler\\bin")
 
@@ -57,6 +59,8 @@ else:
     f.write("0000000000")
 f.close()
 
+os.remove("Files/outpt.pdf")
 for image in images:
     os.remove(image)
+
 
