@@ -7,7 +7,7 @@ from pyzbar.pyzbar import decode, ZBarSymbol
 file_name = 'Files/'+sys.argv[1]+'_ZPOD_00'
 pdf_file  = file_name + '.pdf'
 log_file  = file_name + '.txt'
-print(os.path.exists(pdf_file) )
+
 if not os.path.exists(pdf_file):
     os.chdir('NAPS2')
     os.system('naps2.console -i blank.pdf  -o ../Files/outpt.pdf -f')
@@ -58,8 +58,8 @@ if len(barlist) > 0:
 else:
     f.write("0000000000")
 f.close()
-
-os.remove("Files/outpt.pdf")
+if os.path.exists("Files/outpt.pdf"):
+    os.remove("Files/outpt.pdf")
 for image in images:
     os.remove(image)
 
