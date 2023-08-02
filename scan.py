@@ -4,16 +4,16 @@ from PIL import Image
 from pdf2image import convert_from_path
 from pyzbar.pyzbar import decode, ZBarSymbol
 
-file_name = 'Files/'+sys.argv[1]+'_ZPOD_00'
+file_name = 'out/'+sys.argv[1]+'_ZPOD_00'
 pdf_file  = file_name + '.pdf'
 log_file  = file_name + '.txt'
 
 if not os.path.exists(pdf_file):
     os.chdir('NAPS2')
-    os.system('naps2.console -i blank.pdf  -o ../Files/outpt.pdf -f')
+    os.system('naps2.console -i blank.pdf  -o ../out/outpt.pdf -f')
     os.chdir('..')
 
-    readxPDF = PyPDF2.PdfReader('Files/outpt.pdf')
+    readxPDF = PyPDF2.PdfReader('out/outpt.pdf')
     writePDF = PyPDF2.PdfWriter()
     pagesPDF = len(readxPDF.pages)
     outptPDF = open(pdf_file,"wb")
@@ -58,8 +58,8 @@ if len(barlist) > 0:
 else:
     f.write("0000000000")
 f.close()
-if os.path.exists("Files/outpt.pdf"):
-    os.remove("Files/outpt.pdf")
+if os.path.exists("out/outpt.pdf"):
+    os.remove("out/outpt.pdf")
 for image in images:
     os.remove(image)
 
