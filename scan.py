@@ -10,7 +10,6 @@ pdf_file  = file_name + '.pdf'
 log_file  = file_name + '.txt'
 
 if not os.path.exists(pdf_file):
-    print('In Scan Mode')
     os.chdir('NAPS2')
     os.system('naps2.console -i blank.pdf  -o '+'../'+out_file+' -f')
     os.chdir('..')
