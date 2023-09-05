@@ -1,4 +1,4 @@
-from PyPDF import PdfReader, PdfWriter
+from pypdf import PdfReader, PdfWriter
 
 reader = PdfReader("big_file.pdf")
 writer = PdfWriter()
